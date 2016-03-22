@@ -34,17 +34,27 @@ twitter <- readLines(con3)
 ## close connections
 close(con1, con2, con3)
 rm(con1, con2, con3)```
-
-## Initial Assessment - number of lines
-length(blog)
-length(news)
-length(twitter)
 ```
 
+### Basic Assessment 
+
+```{r, eval=FALSE}
+## number of lines
+length(blog)  ## 899,288
+length(news)  ## 1,010,242
+length(twitter)  ## 2,360,148
+
+## number of words
+sum(sapply(strsplit(blog, split = "[^A-Za-z0-9]"), length))  ## 44,729,620
+sum(sapply(strsplit(news, split = "[^A-Za-z0-9]"), length))  ## 41,076,735
+sum(sapply(strsplit(twitter, split = "[^A-Za-z0-9]"), length))  ## 37,108,123
+```
+
+The three databases (blogs, news, and twitter) have 899288, 1010242, 2360148 lines, and 44729620, 41076735, 37108123 words respectively. 
 
 ### Sampling Strategy
 
-This is a fairly large dataset (899288, 1010242, and 2360148 lines respectively). Often relatively few randomly selected rows or chunks are enough to obtain an accurate approximation for exploratory analysis and for model development. The rbinom function is used here to "flip a biased coin" to determine whether to sample a line of text or not, and 1% of the original text is selected in the sample. A separate sub-sample dataset is created and written out to a separate file for future uses. 
+This is a fairly large dataset. Often relatively few randomly selected rows or chunks are enough to obtain an accurate approximation for exploratory analysis and for model development. The rbinom function is used here to "flip a biased coin" to determine whether to sample a line of text or not, and 1% of the original text is selected in the sample. A separate sub-sample dataset is created and written out to a separate file for future uses. 
 
 ```{r, eval=FALSE}
 set.seed(1122)

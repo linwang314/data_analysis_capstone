@@ -94,16 +94,24 @@ twitter &lt;- readLines(con3)
 
 ## close connections
 close(con1, con2, con3)
-rm(con1, con2, con3)```
+rm(con1, con2, con3)```</code></pre>
+</div>
+<div id="basic-assessment" class="section level3">
+<h3>Basic Assessment</h3>
+<pre class="r"><code>## number of lines
+length(blog)  ## 899,288
+length(news)  ## 1,010,242
+length(twitter)  ## 2,360,148
 
-## Initial Assessment - number of lines
-length(blog)
-length(news)
-length(twitter)</code></pre>
+## number of words
+sum(sapply(strsplit(blog, split = &quot;[^A-Za-z0-9]&quot;), length))  ## 44,729,620
+sum(sapply(strsplit(news, split = &quot;[^A-Za-z0-9]&quot;), length))  ## 41,076,735
+sum(sapply(strsplit(twitter, split = &quot;[^A-Za-z0-9]&quot;), length))  ## 37,108,123</code></pre>
+<p>The three databases (blogs, news, and twitter) have 899288, 1010242, 2360148 lines, and 44729620, 41076735, 37108123 words respectively.</p>
 </div>
 <div id="sampling-strategy" class="section level3">
 <h3>Sampling Strategy</h3>
-<p>This is a fairly large dataset (899288, 1010242, and 2360148 lines respectively). Often relatively few randomly selected rows or chunks are enough to obtain an accurate approximation for exploratory analysis and for model development. The rbinom function is used here to “flip a biased coin” to determine whether to sample a line of text or not, and 1% of the original text is selected in the sample. A separate sub-sample dataset is created and written out to a separate file for future uses.</p>
+<p>This is a fairly large dataset. Often relatively few randomly selected rows or chunks are enough to obtain an accurate approximation for exploratory analysis and for model development. The rbinom function is used here to “flip a biased coin” to determine whether to sample a line of text or not, and 1% of the original text is selected in the sample. A separate sub-sample dataset is created and written out to a separate file for future uses.</p>
 <pre class="r"><code>set.seed(1122)
 sample.index1 &lt;- as.logical(rbinom(n = length(blog), size = 1, prob = 0.01))
 sample.index2 &lt;- as.logical(rbinom(n = length(news), size = 1, prob = 0.01))
@@ -183,13 +191,8 @@ names(thrgram) &lt;- c(&quot;phrase&quot;, &quot;frequency&quot;)</code></pre>
 </div>
 <div id="plotting-the-most-frequent-wordsphrases" class="section level4">
 <h4>Plotting the most frequent words/phrases</h4>
-<pre class="r"><code>library(ggplot2)</code></pre>
-<pre><code>## 
-## Attaching package: 'ggplot2'</code></pre>
-<pre><code>## The following object is masked from 'package:NLP':
-## 
-##     annotate</code></pre>
-<pre class="r"><code>## word
+<pre class="r"><code>library(ggplot2)
+## word
 ggplot(data = onegram[1:40, ], aes(x = reorder(word, order(frequency, decreasing = TRUE)), y = frequency)) + 
   geom_bar(stat = &quot;identity&quot;) + labs(x = &quot;word&quot;) + labs(title = &quot;Word Frequency&quot;) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>

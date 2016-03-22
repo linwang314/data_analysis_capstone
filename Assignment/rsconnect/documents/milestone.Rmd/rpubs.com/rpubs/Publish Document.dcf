@@ -3,6 +3,5 @@ account: rpubs
 server: rpubs.com
 bundleId:
         https://api.rpubs.com/api/v1/document/162640/85d74405ca2a4564b6fb3b1250fe5f99
-url:
-        http://rpubs.com/publish/claim/162640/a0c567d7f14f4e17be0066106c4ef1a6
-when: 1458438940.73935
+url: http://rpubs.com/linwang929/162640
+when: 1458673100.73008
